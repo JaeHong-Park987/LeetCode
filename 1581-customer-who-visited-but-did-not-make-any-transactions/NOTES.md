@@ -1,0 +1,1 @@
+트랜잭션 없이 방문한 고객의 ID와 그 수를 찾는 것이므로 transaction_id IS NULL을 활용!!
