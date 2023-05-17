@@ -15,4 +15,4 @@ FROM(SELECT
                           FROM Users
                           WHERE banned = 'Yes')) AS T
 WHERE request_at BETWEEN '2013-10-01' AND '2013-10-03'
-GROUP BY request_at 
+GROUP BY request_at
