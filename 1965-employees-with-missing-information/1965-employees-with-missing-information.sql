@@ -1,13 +1,18 @@
 # Write your MySQL query statement below
-SELECT a.employee_id
+SELECT A.employee_id
 FROM(
-  SELECT *
-  FROM Employees
+    SELECT E.employee_id
+    FROM Employees AS E
+    LEFT OUTER JOIN Salaries AS S
+    ON E.employee_id = S.employee_id
+    WHERE salary IS NULL
 
-  UNION
+    UNION
 
-  SELECT * 
-  FROM Salaries) as a
-GROUP BY a.employee_id
-HAVING COUNT(a.employee_id) = 1
-ORDER BY a.employee_id 
+    SELECT S.employee_id
+    FROM Employees AS E
+    RIGHT OUTER JOIN Salaries AS S
+    ON E.employee_id = S.employee_id
+    WHERE name IS NULL
+) as A
+ORDER BY A.employee_id
