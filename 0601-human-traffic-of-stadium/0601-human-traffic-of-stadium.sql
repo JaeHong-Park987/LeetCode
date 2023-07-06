@@ -1,16 +1,14 @@
 # Write your MySQL query statement below
-SELECT
-  id,
-  visit_date,
-  people
-FROM Stadium
-WHERE id IN (SELECT s1.id 
-             FROM Stadium s1, Stadium s2, Stadium s3
-             WHERE s1.people >= 100 AND s2.people >= 100 AND s3.people >= 100 AND s1.id + 1 = s2.id AND s1.id + 2 = s3.id)
-OR id IN(SELECT s2.id 
-             FROM Stadium s1, Stadium s2, Stadium s3
-             WHERE s1.people >= 100 AND s2.people >= 100 AND s3.people >= 100 AND s1.id + 1 = s2.id AND s1.id + 2 = s3.id)
-OR id IN (SELECT s3.id 
-             FROM Stadium s1, Stadium s2, Stadium s3
-             WHERE s1.people >= 100 AND s2.people >= 100 AND s3.people >= 100 AND s1.id + 1 = s2.id AND s1.id + 2 = s3.id)
-ORDER BY visit_date
+select distinct t1.*
+from stadium t1, stadium t2, stadium t3
+where t1.people >= 100 and t2.people >= 100 and t3.people >= 100
+and
+(
+    (t1.id - t2.id = 1 and t1.id - t3.id = 2 and t2.id - t3.id =1)  -- t1, t2, t3
+    or
+    (t2.id - t1.id = 1 and t2.id - t3.id = 2 and t1.id - t3.id =1) -- t2, t1, t3
+    or
+    (t3.id - t2.id = 1 and t2.id - t1.id =1 and t3.id - t1.id = 2) -- t3, t2, t1
+)
+order by t1.id
+;
